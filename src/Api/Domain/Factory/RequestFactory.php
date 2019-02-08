@@ -16,8 +16,6 @@ class RequestFactory
      * @param string $secretKey
      * @param array  $postParameters
      *
-     * @see https://collab.lpmotor.ru:8090/confluence/pages/viewpage.action?pageId=11372673
-     *
      * @return Request
      */
     public function create($uri, $secretKey, $postParameters = []) {
