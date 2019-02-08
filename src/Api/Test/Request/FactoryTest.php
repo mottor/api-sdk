@@ -1,12 +1,15 @@
 <?php
 
-use Mottor\Api\Domain\Factory\RequestFactory;
+namespace Mottor\Api\Test\Request;
 
-class FactoryTest
+use Mottor\Api\Domain\Request\Factory\RequestFactory;
+use PHPUnit\Framework\TestCase;
+
+class FactoryTest extends TestCase
 {
     public function testThatFactoryCorrectlyCreatesRequests() {
         $factory = new RequestFactory();
-        $request = $factory->create('https://example.com', 'qwerty', ['first' => 'data', 'second' => 'data']);
+        $request = $factory->createPostRequest('https://example.com', 'qwerty', ['first' => 'data', 'second' => 'data']);
 
         $this->assertEquals('https://example.com', $request->getUri());
         $this->assertEquals('qwerty', $request->getHeader('X-Auth')[0]);
@@ -16,7 +19,7 @@ class FactoryTest
 
         $this->assertEquals('first=data&second=data', urldecode($requestBody));
 
-        $request2 = $factory->create('https://example.com', 'qwerty', [
+        $request2 = $factory->createPostRequest('https://example.com', 'qwerty', [
             'data' => [
                 ['first' => 'data', 'second' => 'data'],
             ]
