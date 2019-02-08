@@ -1,0 +1,35 @@
+{
+  "name": "mottor/api-sdk",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Yuriy Pavlov",
+      "email": "yuriypavlov@outlook.com"
+    }
+  ],
+  "config": {
+    "platform": {
+      "php": "7.0"
+    },
+    "preferred-install": {
+      "*": "dist"
+    },
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "Mottor\\Api\\Domain\\": "src/Api/Domain"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Mottor\\Api\\Test\\": "src/Api/Test"
+    }
+  },
+  "require": {
+    "guzzlehttp/guzzle": "^6.3",
+    "phpunit/phpunit": "^6.5",
+    "psr/http-message": "^1.0",
+    "zendframework/zend-diactoros": "^1.3"
+  }
+}
