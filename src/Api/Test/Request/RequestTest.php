@@ -2,7 +2,6 @@
 
 namespace Mottor\Api\Test\Request;
 
-use Mottor\Api\Domain\Request\Factory\RequestFactory;
 use Mottor\Api\Domain\Request\Model\PostRequest;
 use PHPUnit\Framework\TestCase;
 

@@ -2,18 +2,20 @@
 
 namespace Mottor\Api\Test\Response;
 
-use function GuzzleHttp\Psr7\stream_for;
+use Mottor\Api\Domain\Common\Behavior\ConvertStreamTrait;
 use Mottor\Api\Domain\Response\Model\JsonResponse;
 use PHPUnit\Framework\TestCase;
 
 class ResponseTest extends TestCase
 {
+    use ConvertStreamTrait;
+
     public function testThatResponseConvertsCorrectly() {
         $payload = [
             'property' => 'value'
         ];
 
-        $stream = stream_for(json_encode($payload));
+        $stream = $this->createStreamFromResource(json_encode($payload));
 
         $response = new JsonResponse($stream);
 
@@ -27,7 +29,7 @@ class ResponseTest extends TestCase
             'property' => 1
         ];
 
-        $stream = stream_for(json_encode($payload));
+        $stream = $this->createStreamFromResource(json_encode($payload));
 
         $response = $this
             ->getMockBuilder(JsonResponse::class)
@@ -63,8 +65,8 @@ class ResponseTest extends TestCase
             'property' => 2
         ];
 
-        $stream = stream_for(json_encode($payload));
-        $secondStream = stream_for(json_encode($secondPayload));
+        $stream = $this->createStreamFromResource(json_encode($payload));
+        $secondStream = $this->createStreamFromResource(json_encode($secondPayload));
 
         $response = new JsonResponse($stream);
 
@@ -86,8 +88,8 @@ class ResponseTest extends TestCase
             'property' => 2
         ];
 
-        $stream = stream_for(json_encode($payload));
-        $secondStream = stream_for(json_encode($secondPayload));
+        $stream = $this->createStreamFromResource(json_encode($payload));
+        $secondStream = $this->createStreamFromResource(json_encode($secondPayload));
 
         $response = $this
             ->getMockBuilder(JsonResponse::class)
