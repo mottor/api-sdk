@@ -14,7 +14,6 @@ class JsonResponse extends Response
     use ConvertStreamTrait;
     use ConvertJsonTrait;
     use InjectContentTypeTrait;
-
     const KEY_STATUS = 'ok';
     const KEY_DATA = 'data';
     const KEY_ERROR = 'error';
@@ -112,5 +111,19 @@ class JsonResponse extends Response
         $this->payload = $previousPayload;
 
         return $response;
+    }
+
+    /**
+     * @return array
+     * @throws Exception
+     */
+    public function getData() {
+        $payload = $this->getPayload();
+
+        if (!isset($payload[self::KEY_DATA])) {
+            return [];
+        }
+
+        return $payload[self::KEY_DATA];
     }
 }
