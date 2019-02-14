@@ -11,6 +11,8 @@ class PostRequest extends Request
     use ConvertStreamTrait;
     use InjectContentTypeTrait;
 
+    const HEADER_AUTHORIZATION = 'X-Auth';
+
     public function __construct($uri = null, $method = 'POST', $body = 'php://temp', array $headers = []) {
         $headers = $this->injectContentType('application/x-www-form-urlencoded', $headers);
 
@@ -23,7 +25,26 @@ class PostRequest extends Request
      * @return static
      */
     public function withSecretKey($secretKey) {
-        return $this->withHeader('X-Auth', $secretKey);
+        return $this->withHeader(self::HEADER_AUTHORIZATION, $secretKey);
+    }
+
+    /**
+     * @param string $secretKey
+     *
+     * @return bool
+     */
+    public function hasSecretKey($secretKey) {
+        if (!$this->hasHeader(self::HEADER_AUTHORIZATION)) {
+            return false;
+        }
+
+        $requestSecretKey = $this->getHeader(self::HEADER_AUTHORIZATION)[0];
+
+        if ($requestSecretKey !== $secretKey) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
