@@ -1,0 +1,1 @@
+[![Build Status](https://travis-ci.com/mottor/api-sdk.svg?branch=master)](https://travis-ci.com/mottor/api-sdk)
