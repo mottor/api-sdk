@@ -56,7 +56,7 @@ class ResponseTest extends TestCase
         $response->getPayload();
     }
 
-    public function testThatResponse() {
+    public function testThatResponseIsImmutable() {
         $payload = [
             'property' => 1
         ];
