@@ -8,4 +8,4 @@ sudo: false
 
 install: travis_retry composer install --no-interaction --prefer-source
 
-script: phpunit --coverage-text
+script: ./vendor/bin/phpunit --bootstrap ./vendor/autoload.php ./src/Api/Test
