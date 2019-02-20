@@ -10,6 +10,24 @@ class ResponseTest extends TestCase
 {
     use ConvertStreamTrait;
 
+    public function testResponseIsSuccessful() {
+        $jsonResponse = new JsonResponse();
+        $jsonResponse = $jsonResponse->withPayload([
+            JsonResponse::MEMBER_NAME_STATUS => true
+        ]);
+
+        $this->assertEquals(true, $jsonResponse->getMember(JsonResponse::MEMBER_NAME_STATUS));
+    }
+
+    public function testResponseIsNotSuccessful() {
+        $jsonResponse = new JsonResponse();
+        $jsonResponse = $jsonResponse->withPayload([
+            JsonResponse::MEMBER_NAME_STATUS => false
+        ]);
+
+        $this->assertEquals(false, $jsonResponse->getMember(JsonResponse::MEMBER_NAME_STATUS));
+    }
+
     public function testThatResponseConvertsCorrectly() {
         $payload = [
             'property' => 'value'

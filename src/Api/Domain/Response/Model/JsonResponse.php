@@ -14,9 +14,12 @@ class JsonResponse extends Response
     use ConvertStreamTrait;
     use ConvertJsonTrait;
     use InjectContentTypeTrait;
-    const KEY_STATUS = 'ok';
-    const KEY_DATA = 'data';
-    const KEY_ERROR = 'error';
+
+    const MEMBER_NAME_STATUS = 'ok';
+
+    const MEMBER_NAME_DATA = 'data';
+
+    const MEMBER_NAME_ERROR = 'error';
 
     /**
      * Contains decoded body
@@ -25,6 +28,9 @@ class JsonResponse extends Response
      */
     protected $payload;
 
+    /**
+     * @inheritdoc
+     */
     public function __construct($body = 'php://memory', $status = 200, array $headers = []) {
         $headers = $this->injectContentType('application/json', $headers);
 
@@ -57,25 +63,20 @@ class JsonResponse extends Response
     }
 
     /**
-     * @return bool
+     * @param string $memberName
+     * @param null   $default
+     *
+     * @return mixed
      * @throws Exception
      */
-    public function isSuccessful() {
-        if ($this->getStatusCode() !== 200) {
-            return false;
-        }
-
+    public function getMember($memberName, $default = null) {
         $payload = $this->getPayload();
 
-        if (!isset($payload[self::KEY_STATUS])) {
-            return false;
+        if (!isset($payload[$memberName])) {
+            return $default;
         }
 
-        if (false === $payload[self::KEY_STATUS]) {
-            return false;
-        }
-
-        return true;
+        return $payload[$memberName];
     }
 
     /**
@@ -111,19 +112,5 @@ class JsonResponse extends Response
         $this->payload = $previousPayload;
 
         return $response;
-    }
-
-    /**
-     * @return array
-     * @throws Exception
-     */
-    public function getData() {
-        $payload = $this->getPayload();
-
-        if (!isset($payload[self::KEY_DATA])) {
-            return [];
-        }
-
-        return $payload[self::KEY_DATA];
     }
 }
